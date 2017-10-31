@@ -44,8 +44,16 @@ public class TrackController {
     }
 
     @GetMapping("/tracks")
-    public @ResponseBody String getCurrentTracklist() {
+    public @ResponseBody String getCurrentTrack() {
 
-        return  "";
+        boolean found = false;
+        TrackList trackList = null;
+        while(!found) {
+            trackList = trackListRepository.findOne(Long.valueOf((long)Math.floor(Math.random()
+                                                                * trackListRepository.count())));
+            if(trackList != null) found = true;
+        }
+
+        return  trackList.getPath();
     }
 }
